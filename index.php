@@ -1,3 +1,9 @@
+<?php 
+require 'user.php';
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -5,7 +11,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Crud en php</title>
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    
+
 </head>
 
 <body>
@@ -35,21 +41,18 @@
                         <?php include 'util/database.php'; //on inclut notre fichier de connection
                         $pdo = Database::connect(); //on se connecte à la base
                         $sql = 'SELECT * FROM tp_crud_user ORDER BY id DESC'; //on formule notre requet
+                     
                         foreach ($pdo->query($sql) as $row) { //on cree les lignes du tableau avec chaque valeur retournée
+                            $user=new User($row);
                             echo '<tr>';
-                            echo "<td>{$row['name']}</td>";
-                            echo "<td>{$row['firstname']}</td>";
-                            echo "<td>{$row['birthDate']}</td>";
-                            echo "<td>{$row['tel']}</td>";
-                            echo "<td>{$row['email']}</td>";
-                            echo "<td>{$row['country']}</td>";
-                            echo "<td>{$row['comment']}</td>";
-                            echo "<td>{$row['job']}</td>";
-                            echo "<td>{$row['url']}</td>";
+                            foreach($user->createArray() as $key=>$value){
+                                echo "<td>{$value}</td>";
+                            }
                             echo "<td class='table-primary'><a class='btn' href='view.php?id={$row['id']}'>Read</a></td>"; // un autre td pour le bouton d'edition
                             echo "<td class='table-success'><a class='btn' href='edit.php?id={$row['id']}'>Edit</a></td>"; // un autre td pour le bouton d'update
                             echo "<td class='table-danger'><a class='btn' href='delete.php?id={$row['id']}'>Delete</a></td>"; // un autre td pour le bouton de suppression
-                            echo '</tr>';
+                           
+                         echo '</tr>';
                         }
                         Database::disconnect(); //on se deconnecte de la base
                         ?>
