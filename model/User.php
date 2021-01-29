@@ -19,9 +19,12 @@ class User
 
     public function __get($name)
     {
-        return array_key_exists($name, $this->_properties)
+        if($this->_properties != null){
+            return array_key_exists($name, $this->_properties)
             ? $this->_properties[$name]
             : null;
+        }
+       
     }
 
 
@@ -85,6 +88,7 @@ class User
     public function validateAll()
     {
         $paramaters = $this->getProperties();
+        unset($paramaters['id']);
         $valid = true;
         foreach ($paramaters as $key => $value) {
             if (!$this->validateField($key)) {

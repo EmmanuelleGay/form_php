@@ -21,6 +21,7 @@ switch (@$_GET['action']) {
     case 'edit':
         if (!empty($_POST)) {
             $userUpdated = new User($_POST['user']);
+            var_dump($userUpdated);
             if ($userUpdated->validateAll()) {
                 UserDao::saveOrUpdate($userUpdated);
                 require 'view/list.php';
@@ -33,19 +34,6 @@ switch (@$_GET['action']) {
         }
         break;
 
-    case 'add':
-        if (!empty($_POST)) {
-            $user = new User($_POST);
-            if ($user->validateAll()) {
-                UserDao::saveOrUpdate($user);
-                require 'view/list.php';
-            } else {
-                require 'view/add.php';
-            }
-        } else {
-            require 'view/add.php';
-        }
-        break;
     case 'delete':
         if (!empty($_POST)) {
             UserDao::delete($user);
