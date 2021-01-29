@@ -8,9 +8,9 @@ require 'model/UserDao.php';
 
 if (!empty($_GET['id'])) {
     $user = UserDao::findById($_GET['id']);
+    var_dump($user);
 } else {
     $user = new User;
-    var_dump($user);
 }
 /*
 if (empty($_GET['action'])) {
@@ -19,16 +19,31 @@ if (empty($_GET['action'])) {
 
 switch (@$_GET['action']) {
     case 'edit':
-        // var_dump(($_POST));
         if (!empty($_POST)) {
-           $userUpdated = new User($_POST['user']);
-        //    var_dump($userUpdated);
-        //    $userUpdated->{'id'}=$user->id;
-            UserDao::saveOrUpdate($userUpdated);
-            require 'view/list.php';
+            $userUpdated = new User($_POST['user']);
+            if ($userUpdated->validateAll()) {
+                UserDao::saveOrUpdate($userUpdated);
+                require 'view/list.php';
+            } else {
+                $user = $userUpdated;
+                require 'view/edit.php';
+            }
         } else {
-            
             require 'view/edit.php';
+        }
+        break;
+
+    case 'add':
+        if (!empty($_POST)) {
+            $user = new User($_POST);
+            if ($user->validateAll()) {
+                UserDao::saveOrUpdate($user);
+                require 'view/list.php';
+            } else {
+                require 'view/add.php';
+            }
+        } else {
+            require 'view/add.php';
         }
         break;
     case 'delete':

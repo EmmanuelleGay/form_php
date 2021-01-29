@@ -1,89 +1,3 @@
-<?php require 'util/database.php';
-if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)) { //on initialise nos messbirthDates d'erreurs;
-    $nameError = '';
-    $firstnameError = '';
-    $birthDateError = '';
-    $telError = '';
-    $emailError = '';
-    $countryError = '';
-    $commentError = '';
-    $jobError = '';
-    $urlError = ''; // on recupère nos valeurs
-    $name = htmlentities(trim($_POST['name']));
-    $firstname = htmlentities(trim($_POST['firstname']));
-    $birthDate = htmlentities(trim($_POST['birthDate']));
-    $tel = htmlentities(trim($_POST['tel']));
-    $email = htmlentities(trim($_POST['email']));
-    $country = htmlentities(trim($_POST['country']));
-    $comment = htmlentities(trim($_POST['comment']));
-    $job = htmlentities(trim($_POST['job']));
-    $url = htmlentities(trim($_POST['url'])); // on vérifie nos champs
-    $valid = true;
-    if (empty($name)) {
-        $nameError = 'Please enter Name';
-        $valid = false;
-    } else if (!preg_match("/^[a-zA-Z ]*$/", $name)) {
-        $nameError = "Only letters and white space allowed";
-    }
-    if (empty($firstname)) {
-        $firstnameError = 'Please enter firstname';
-        $valid = false;
-    } else if (!preg_match("/^[a-zA-Z ]*$/", $name)) {
-        $nameError = "Only letters and white space allowed";
-    }
-    if (empty($email)) {
-        $emailError = 'Please enter Email Address';
-        $valid = false;
-    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $emailError = 'Please enter a valid Email Address';
-        $valid = false;
-    }
-    if (empty($birthDate)) {
-        $birthDateError = 'Please enter your birthDate';
-        $valid = false;
-    }
-    if (empty($tel)) {
-        $telError = 'Please enter phone';
-        $valid = false;
-    } else if (!preg_match("/^[0-9]*$/", $tel)) {
-        $telError = 'Please enter a valid phone';
-        $valid = false;
-    }
-
-    if (!isset($country)) {
-        $countryError = 'Please select a country';
-        $valid = false;
-    }
-
-    if (empty($comment)) {
-        $commentError = 'Please enter a description';
-        $valid = false;
-    }
-
-    if (empty($job)) {
-        $jobError = 'Please select a job';
-        $valid = false;
-    }
-
-    if (empty($url)) {
-        $urlError = 'Please enter website url';
-        $valid = false;
-    } else if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $url)) {
-        $urlError = 'Enter a valid url';
-        $valid = false;
-    }
-
-    if ($valid) { // si les données sont présentes et bonnes, on se connecte à la base
-        $pdo = Database::connect();
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO tp_crud_user (name,firstname,birthDate,tel, email, country,comment, job, url) values(?, ?, ?, ? , ? , ? , ? , ?, ?)";
-        $q = $pdo->prepare($sql);
-        $q->execute(array($name, $firstname, $birthDate, $tel, $email, $country, $comment, $job, $url));
-        Database::disconnect();
-        header("Location: index.php");
-    }
-}
-?>
 <!DOCTYPE html>
 <html>
 
@@ -99,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)) { //on initialise no
             <h3 class="mt-5 mb-3">Add a user</h3>
         </div>
         <div class="row">
-            <form method="post" action="add.php">
+            <form method="post" action="controller.php?action=edit">
 
                 <div class="form-group <?php echo !empty($nameError) ? 'error' : ''; ?>">
                     <label for="name">Name</label>
@@ -145,13 +59,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)) { //on initialise no
 
                 <div class="form-group <?php echo !empty($countryError) ? 'error' : ''; ?>">
                     <label for="country">Country</label>
-                    <div class="controls">
-                        <select class="form-control" id="country" name="country">
-                            <option value="france">France</option>
-                            <option value="uk">United Kingdom</option>
-                            <option value="usa">USA</option>
-                        </select>
-                    </div>
+                    <select class="form-control" id="country" name="country">
+                        <option value="paris">Paris</option>
+                        <option value="londres">Londres</option>
+                        <option value="amsterdam">Amsterdam</option>
+                    </select>
                     <?php if (!empty($countryError)) : ?>
                         <span class="help-inline"><?php echo $countryError; ?></span>
                     <?php endif; ?>
@@ -177,17 +89,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)) { //on initialise no
                             Network adminisatrator
                         </label>
                     </div>
-
                 </div>
                 <?php if (!empty($jobError)) : ?>
-                    <span class="help-inline"><?php echo $jobError; ?></span>
+                    <span class="help-inline">Veuillez saisir un métier valide</span>
                 <?php endif; ?>
 
                 <div class="form-group <?php echo !empty($urlError) ? 'error' : ''; ?>">
                     <label for="website">Website</label>
                     <input type="text" class="form-control" name="url" value="<?php echo !empty($url) ? $url : ''; ?>">
                     <?php if (!empty($urlError)) : ?>
-                        <span class="help-inline"><?php echo $urlError; ?></span>
+                        <span class="help-inline">Veuillez saisir une url valide</span>
                     <?php endif; ?>
                 </div>
 
@@ -195,12 +106,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)) { //on initialise no
                     <label for="comment">Comment</label>
                     <textarea class="form-control" rows="4" cols="60" name="comment"><?php if (isset($comment)) echo $comment; ?></textarea>
                     <?php if (!empty($commentError)) : ?>
-                        <span class="help-inline"><?php echo $commentError; ?></span>
+                        <span class="help-inline">Veuillez saisir un commentaire valide</span>
                     <?php endif; ?>
                 </div>
                 <div class="form-actions">
-                    <a class="btn btn-light" href="index.php">Previous</a>
+                    <a class="btn btn-light" href="controller.php">Previous</a>
                     <input type="submit" class="btn btn-success" name="submit" value="Submit">
+                    <a class="btn" href="controller.php">Retour</a>
                 </div>
             </form>
         </div>

@@ -3,17 +3,7 @@ require 'util/database.php';
 
 class User
 {
-    
-    /*  private $id;
-    private $name;
-    private $firstname;
-    private $birthDate;
-    private $tel;
-    private $email;
-    private $country;
-    private $comment;
-    private $job;
-    private $url;*/
+
     private $_properties;
 
     public function __construct(array $data = [])
@@ -38,7 +28,7 @@ class User
     public function  setParametersFromArray($data)
     {
         foreach ($data as $key => $value) {
-            $this->{$key}=$value;
+            $this->{$key} = $value;
         }
     }
 
@@ -95,8 +85,13 @@ class User
     public function validateAll()
     {
         $paramaters = $this->getProperties();
-        foreach ($paramaters as $value) {
+        $valid = true;
+        foreach ($paramaters as $key => $value) {
+            if (!$this->validateField($key)) {
+                $valid = false;
+            }
         }
+        return $valid;
     }
 
     public function sanitizeFields()
@@ -107,55 +102,4 @@ class User
         }
         $this->setParametersFromArray($sanitizedFields);
     }
-    /*
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function getFirstname()
-    {
-        return $this->firstname;
-    }
-
-    public function getBirthDate()
-    {
-        return $this->birthDate;
-    }
-
-    public function getTel()
-    {
-        return $this->tel;
-    }
-
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    public function getCountry()
-    {
-        return $this->country;
-    }
-
-    public function getComment()
-    {
-        return $this->comment;
-    }
-
-    public function getJob()
-    {
-        return $this->job;
-    }
-
-    public function getUrl()
-    {
-        return $this->url;
-    }
-    */
 }
