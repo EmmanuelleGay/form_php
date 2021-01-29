@@ -50,7 +50,9 @@ class UserDao
     public static function saveOrUpdate($user){
         $pdo = Database::connect();
         $user->sanitizeFields();
-        if(!empty($user->id)){
+        $id = $user->id;
+        // var_dump($user);
+        if(!empty($id)){
             UserDao::update($user);
         }
         else {

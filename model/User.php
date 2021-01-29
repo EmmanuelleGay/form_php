@@ -3,6 +3,7 @@ require 'util/database.php';
 
 class User
 {
+    
     /*  private $id;
     private $name;
     private $firstname;

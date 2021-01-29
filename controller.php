@@ -10,6 +10,7 @@ if (!empty($_GET['id'])) {
     $user = UserDao::findById($_GET['id']);
 } else {
     $user = new User;
+    var_dump($user);
 }
 /*
 if (empty($_GET['action'])) {
@@ -18,13 +19,15 @@ if (empty($_GET['action'])) {
 
 switch (@$_GET['action']) {
     case 'edit':
-        var_dump(($_POST));
+        // var_dump(($_POST));
         if (!empty($_POST)) {
-           
-            UserDao::saveOrUpdate($user);
+           $userUpdated = new User($_POST['user']);
+        //    var_dump($userUpdated);
+        //    $userUpdated->{'id'}=$user->id;
+            UserDao::saveOrUpdate($userUpdated);
             require 'view/list.php';
         } else {
-            echo "coucou";
+            
             require 'view/edit.php';
         }
         break;

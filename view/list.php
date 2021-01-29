@@ -1,7 +1,5 @@
 <?php
 
-
-
 ?>
 
 
@@ -24,7 +22,7 @@
         </div>
         <div class="row-fluid">
             <div class="col-12">
-                <a href="add.php" class="btn btn-success mb-2">Add User</a>
+                <a href="controller.php?action=edit" class="btn btn-success mb-2">Add User</a>
                 <table class="table table-responsive-sm table-striped table-bordered">
                     <thead class="thead-dark">
                         <th>Name</th>
