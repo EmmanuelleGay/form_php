@@ -8,20 +8,14 @@ require 'model/UserDao.php';
 
 if (!empty($_GET['id'])) {
     $user = UserDao::findById($_GET['id']);
-    var_dump($user);
 } else {
     $user = new User;
 }
-/*
-if (empty($_GET['action'])) {
-    $_GET['action']='list';
-}*/
 
 switch (@$_GET['action']) {
     case 'edit':
         if (!empty($_POST)) {
             $userUpdated = new User($_POST['user']);
-            var_dump($userUpdated);
             if ($userUpdated->validateAll()) {
                 UserDao::saveOrUpdate($userUpdated);
                 require 'view/list.php';

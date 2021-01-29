@@ -51,7 +51,6 @@ class UserDao
         $pdo = Database::connect();
         $user->sanitizeFields();
         $id = $user->id;
-        // var_dump($user);
         if(!empty($id)){
             UserDao::update($user);
         }
