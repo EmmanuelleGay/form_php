@@ -1,5 +1,6 @@
-<?php 
-require 'user.php';
+<?php
+
+
 
 ?>
 
@@ -38,21 +39,23 @@ require 'user.php';
                         <th colspan="3">Edition</th>
                     </thead>
                     <tbody>
-                        <?php include 'util/database.php'; //on inclut notre fichier de connection
-                        $pdo = Database::connect(); //on se connecte à la base
-                        $sql = 'SELECT * FROM tp_crud_user ORDER BY id DESC'; //on formule notre requet
-                     
-                        foreach ($pdo->query($sql) as $row) { //on cree les lignes du tableau avec chaque valeur retournée
-                            $user=new User($row);
-                            echo '<tr>';
-                            foreach($user->createArray() as $key=>$value){
-                                echo "<td>{$value}</td>";
-                            }
-                            echo "<td class='table-primary'><a class='btn' href='view.php?id={$row['id']}'>Read</a></td>"; // un autre td pour le bouton d'edition
-                            echo "<td class='table-success'><a class='btn' href='edit.php?id={$row['id']}'>Edit</a></td>"; // un autre td pour le bouton d'update
-                            echo "<td class='table-danger'><a class='btn' href='delete.php?id={$row['id']}'>Delete</a></td>"; // un autre td pour le bouton de suppression
+                        <?php
+                        $userList = UserDao::findAll();
+                        foreach ($userList as $user) { //on cree les lignes du tableau avec chaque valeur retournée
+                            $data = $user->getProperties();
+                            
+                           unset($data['id']);
                            
-                         echo '</tr>';
+                            echo '<tr>';
+                            foreach ($data as $value) {
+                                echo "<td>{$value}</td>";
+                               
+                            }
+                            echo "<td class='table-primary'><a class='btn' href='controller.php?id={$user->id}&action=read'>Read</a></td>"; // un autre td pour le bouton d'edition
+                            echo "<td class='table-success'><a class='btn' href='controller.php?id={$user->id}&action=edit'>Edit</a></td>"; // un autre td pour le bouton d'update
+                            echo "<td class='table-danger'><a class='btn' href='controller.php?id={$user->id}&action=delete'>Delete</a></td>"; // un autre td pour le bouton de suppression
+
+                            echo '</tr>';
                         }
                         Database::disconnect(); //on se deconnecte de la base
                         ?>
