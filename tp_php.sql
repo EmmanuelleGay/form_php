@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 28, 2021 at 06:25 PM
+-- Generation Time: Jan 30, 2021 at 03:14 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.34
 
@@ -32,8 +32,8 @@ USE `tp_php`;
 DROP TABLE IF EXISTS `tp_crud_user`;
 CREATE TABLE `tp_crud_user` (
   `id` int(11) NOT NULL,
-  `name` varchar(250) DEFAULT NULL,
-  `firstname` varbinary(250) DEFAULT NULL,
+  `firstName` varbinary(250) DEFAULT NULL,
+  `lastName` varchar(250) DEFAULT NULL,
   `birthDate` date DEFAULT NULL,
   `tel` int(11) DEFAULT NULL,
   `email` varchar(250) DEFAULT NULL,
@@ -47,10 +47,9 @@ CREATE TABLE `tp_crud_user` (
 -- Dumping data for table `tp_crud_user`
 --
 
-INSERT INTO `tp_crud_user` (`id`, `name`, `firstname`, `birthDate`, `tel`, `email`, `country`, `comment`, `job`, `url`) VALUES
-(12, 'Test', 0x546573746572, '2021-01-20', 2147483647, 'test@test.test', 'paris', 'commentaire test commentaire test commentaire test commentaire test commentaire test', 'integrateur', 'www.test.com'),
-(13, 'Untel', 0x4a65616e, '2020-12-30', 1212454545, 'jean@untel.net', 'londres', 'sqdsqd sqdsqd sqdsqd sqdsqd sqdsqd sqdsqd sqdsqd sqdsqd sqdsqd sqdsqd', 'reseau', 'www.jean.org'),
-(14, 'Autrenom', 0x41757472657072656e, '2020-12-27', 78789, 'autre@nom.cc', 'paris', 'yyyy aaaaaaaaaaa uuuuuuuuuu yyyy aaaaaaaaaaa uuuuuuuuuu yyyy aaaaaaaaaaa uuuuuuuuuu yyyy aaaaaaaaaaa uuuuuuuuuu', 'dev', 'www.www.www');
+INSERT INTO `tp_crud_user` (`id`, `firstName`, `lastName`, `birthDate`, `tel`, `email`, `country`, `comment`, `job`, `url`) VALUES
+(13, 0x4a65616e, 'Untel', '1981-11-30', 1212454545, 'jean@untel.net', 'France', 'sqdsqd sqdsqd sqdsqd sqdsqd sqdsqd sqdsqd sqdsqd sqdsqd sqdsqd sqdsqd', 'integrateur', 'www.jean.org'),
+(14, 0x56696e63656e74, 'Adultman', '1945-02-27', 2147483647, 'vincent@businessfactory.com', 'USA', 'yyyy aaaaaaaaaaa uuuuuuuuuu yyyy aaaaaaaaaaa uuuuuuuuuu yyyy aaaaaaaaaaa uuuuuuuuuu yyyy aaaaaaaaaaa uuuuuuuuuu', 'integrateur', 'businessfactory.com');
 
 --
 -- Indexes for dumped tables
@@ -70,7 +69,7 @@ ALTER TABLE `tp_crud_user`
 -- AUTO_INCREMENT for table `tp_crud_user`
 --
 ALTER TABLE `tp_crud_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
