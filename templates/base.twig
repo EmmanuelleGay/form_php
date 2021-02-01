@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ baseUrl }}css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="{{ baseUrl }}css/user.css"/>
+        <title>User Management - {% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row-fluid mb-4">
+                <div class="col-4">
+                    <h2>{% block contentTitle %}{% endblock %}</h2>
+                </div>
+            </div>
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+</html>

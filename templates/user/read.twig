@@ -1,0 +1,51 @@
+{% extends "base.twig" %}
+{% block title %}View User{% endblock %}
+{% block contentTitle %}View User Information{% endblock %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="col">
+        <table class="table table-responsive-sm table-striped table-bordered">
+            <tbody>
+                <tr>
+                    <td>First Name</td>
+                    <td>{{user.firstName}}</td>
+                </tr>
+                <tr>
+                    <td>Last Name</td>
+                    <td>{{user.lastName}}</td>
+                </tr>
+                <tr>
+                    <td>Birth Date</td>
+                    <td>{{user.birthDate}}</td>
+                </tr>
+                <tr>
+                    <td>Telephone</td>
+                    <td>{{user.tel}}</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>{{user.email}}</td>
+                </tr>
+                <tr>
+                    <td>Country</td>
+                    <td>{{user.country}}</td>
+                </tr>
+                <tr>
+                    <td>Comment</td>
+                    <td>{{user.comment}}</td>
+                </tr>
+                <tr>
+                    <td>Job</td>
+                    <td>{{user.job}}</td>
+                </tr>
+                <tr>
+                    <td>Web Site</td>
+                    <td>{{user.url}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <a class="btn btn-info"" href="{{ baseUrl }}">Back</a>
+    </div>
+</div>
+{% endblock %}
