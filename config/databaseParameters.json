@@ -1,0 +1,14 @@
+{
+    "shea.needemand.com" : {
+        "user": "c34shea",
+        "db_name": "c34shea",
+        "password": "ijdz24dSF",
+        "host": "localhost"
+    },
+    "localhost" : {
+        "user": "root",
+        "db_name": "tp_php",
+        "password": "",
+        "host": "localhost"
+    }
+}

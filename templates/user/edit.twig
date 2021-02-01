@@ -1,0 +1,100 @@
+{% extends "base.twig" %}
+{% block title %}Edit User{% endblock %}
+{% block contentTitle %}Edit User{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div class="card text-white bg-dark mb-3">
+            <div class="card-body">
+                <form action="{{ baseUrl }}edit/{{user.id}}" method="post" class="{{isSubmitted ?:'no-validate'}}" >
+                    <div class="form-row">
+                        <label for="firstName">First Name</label>
+                        <input class="form-control {{ errors['firstName'] ? 'is-invalid':'is-valid'}}" id="firstName" type="text" name="user[firstName]" value="{{user.firstName}}">
+                        {%- if errors['firstName']['notEmpty'] -%}
+                            <div class="invalid-feedback">Your first name cannot be empty.</div>
+                        {%- endif -%}
+                        {%- if errors['firstName']['letters'] -%}
+                            <div class="invalid-feedback">Please enter a valid first name.</div>
+                        {%- endif -%}
+                    </div>
+                    <div class="form-row">
+                        <label for="lastName">Last Name</label>
+                        <input class="form-control {{ errors['lastName'] ? 'is-invalid':'is-valid'}}" id="lastName" name="user[lastName]" type="text" value="{{user.lastName}}" >
+                        {%- if errors['lastName']['notEmpty'] -%}
+                            <div class="invalid-feedback">Your last name cannot be empty.</div>
+                        {%- endif -%}
+                        {%- if errors['lastName']['letters'] -%}
+                            <div class="invalid-feedback">Please enter a valid last name.</div>
+                        {%- endif -%}
+                    </div>
+                    <div class="form-row">
+                        <label for="birthDate">Birth Date</label>
+                        <input id="birthDate" class="form-control" type="date" name="user[birthDate]" value="{{user.birthDate}}">
+                    </div>
+                    <div class="form-row">
+                        <label for="email">Email Address</label>
+                        <input id="email" class="form-control {{ errors['email'] ? 'is-invalid':'is-valid'}}" name="user[email]" type="text" placeholder="Email Address" value="{{user.email}}">
+                        {%- if errors['email']['email'] -%}
+                            <div class="invalid-feedback">Please enter a valid email.</div>
+                        {%- endif -%}
+                        {%- if errors['email']['unique'] -%}
+                            <div class="invalid-feedback">This email is already taken.</div>
+                        {%- endif -%}
+                    </div>
+                    <div class="form-row">
+                        <labelfor="phone">Telephone</label>
+                        <input class="form-control {{ errors['tel'] ? 'is-invalid':'is-valid'}}" id="phone" name="user[tel]" type="text" value="{{user.tel}}">
+                        {%- if errors['tel']['notEmpty'] -%}
+                            <div class="invalid-feedback">Your telephone number cannot be empty.</div>
+                        {%- endif -%}
+                        {%- if errors['tel']['telephone'] -%}
+                            <div class="invalid-feedback">Your telephone number must consist of numbers, with an optional "+" prefix</div>
+                        {%- endif -%}
+                    </div>
+                    <div class="form-row">
+                        <label for="country">Country</label>
+                        <input class="form-control" id="country" name="user[country]" type="text" value="{{user.country}}">
+                    </div>
+
+                    <div class="form-row mt-3 mb-3">
+                        <span>Job : </span>
+                        <div class="form-check form-check-inline ml-2">
+                            <input type="radio" id="dev" name="user[job]" value="dev" {{ user.job == 'dev' ? 'checked' : '' }}>
+                            <label class="form-check-label" for="dev">
+                                Software Developer
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline ml-2">
+                            <input type="radio" id="integrateur" name="user[job]" value="integrateur" {{ user.job == 'integrateur' ? 'checked' : '' }}>
+                            <label class="form-check-label" for="integrateur">
+                                System Developer
+                            </label>
+                        </div>
+
+                        <div class="form-check form-check-inline ml-2">
+                            <input type="radio" id="reseau" name="user[job]" value="reseau" {{ user.job == 'reseau' ? 'checked' : '' }}>
+                            <label class="form-check-label" for="reseau">
+                                Network administrator
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="website">Website</label>
+                        <input type="text" class="form-control" name="user[url]" value="{{user.url}}">
+                    </div>
+                    <div class="form-row">
+                        <label for="comment">Comment</label>
+                        <textarea class="form-control" rows="4" cols="60" name="user[comment]">{{user.comment}}</textarea>
+                    </div>
+                    <div class="mt-3">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                        <a class="btn btn-info" href="{{ baseUrl }}">Back</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
