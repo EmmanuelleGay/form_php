@@ -36,6 +36,23 @@ class FormatUtil{
     public static function dump($var){
         echo "<pre>".htmlentities(print_r($var, true))."</pre>";
     }
+
+    
+    /**
+     * endsWith
+     * just like php 8's str_ends_with, but since the prod server uses php 7.4 we include it here
+     * 
+     * @param  mixed $haystack
+     * @param  mixed $needle
+     * @return void
+     */
+    public static function endsWith( $haystack, $needle ) {
+        $length = strlen( $needle );
+        if( !$length ) {
+            return true;
+        }
+        return substr( $haystack, -$length ) === $needle;
+    }
 }
 
 ?>
