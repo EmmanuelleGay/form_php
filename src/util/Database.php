@@ -18,10 +18,10 @@ class Database
      */
     public static function connect(): ?PDO {
         if (self::$connectionParameters == null){ 
-            // If connection parameters not initiated, pull them from a JSON file
-            $jsonString = @file_get_contents(SiteUtil::toAbsolute("data/databaseParameters.json"));
+            $jsonString = file_get_contents(__DIR__ . "/../../config/databaseParameters.json");
             self::$connectionParameters = json_decode($jsonString,true);
         }
+
         if (self::$conn == null) {
             $address = $_SERVER['SERVER_NAME']; // get host address, without the port
 
