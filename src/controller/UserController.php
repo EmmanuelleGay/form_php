@@ -14,7 +14,7 @@ class UserController{
      * @return void
      */
     public function __construct(){
-        $loader = new \Twig\Loader\FilesystemLoader(SiteUtil::toAbsolute('templates'));
+        $loader = new \Twig\Loader\FilesystemLoader(SiteUtil::toAbsolute('templates/user'));
         $this->twig = new \Twig\Environment($loader);
         
         FormatUtil::sanitize($_POST); // need recursive sanitizing for multidimensional array
@@ -99,7 +99,7 @@ class UserController{
                 'user' => $this->user         // current user
             ]);
     
-            echo $this->twig->render("user/$templateName.twig", $templateVars); // render twig template
+            echo $this->twig->render("$templateName.twig", $templateVars); // render twig template
         }
     }
 

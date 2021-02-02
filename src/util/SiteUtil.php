@@ -29,16 +29,25 @@ class SiteUtil{
         return dirname( __FILE__ ) . "/../../$relativePath";
     }
 
-    /**
+    
+     /**
      * url
-     * Transforms a relative (to original calling script) URL into an absolute one
-     * @param  String $relative URL
+     * Transforms a relative (to project root) URL into an absolute one
+     * @param  String URL $relative to project root
      * @return String absolute url
      */
     public static function url(String $relativeUrl=""): String{
-        return dirname($_SERVER["SCRIPT_NAME"]) . "/" . $relativeUrl;
+        // base url is originally called script's directory
+        $baseUrl = dirname($_SERVER["SCRIPT_NAME"]);
+
+        // In local testing, we maycall a script in project root (')not /public) to simulate production .htaccess behavior
+        if (FormatUtil::endsWith($baseUrl,"/public")){
+            $baseUrl = dirname($baseUrl);
+        }
+
+        return $baseUrl . "/" . $relativeUrl;
     }
-    
+
     /**
      * getUrlParameters
      * extracts an URL of the form /my/pretty/url from $_SERVER, and returns an array of slugs
